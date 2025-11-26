@@ -30,11 +30,22 @@ function App() {
   const updateBlock = (id, field, value) => {
     setBlocks((prev) =>
       prev.map((block) =>
-        blocks.id === id ? { ...block, [field]: value } : block
+        block.id === id ? { ...block, [field]: value } : block
       )
     )
   }
 
+  //時間を計算するために分換算する関数を作る
+  const timeToMinutes = (timeStr) => {
+    const [h, m] = timeStr.split(":").map(Number); //:で時間と分を分割し、map関数で配列内の各要素を数値に変換
+    return h * 60 + m;
+  }
+  //分換算を時間に戻す関数を作る
+  const minutesToTime = (minutes) =>{
+    const h = String(Math.floor(minutes / 60)).padStart(2, '0'); //padStartで2桁に揃える
+    const m = String(minutes % 60).padStart(2, '0');
+    return `${h}:${m}`;
+}
   return (
     <div style={{ padding: '16px', maxWidth: '600px', margin: '0 auto' }}>
       <h1>今日の予定を入力</h1>
